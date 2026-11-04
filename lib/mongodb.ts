@@ -9,7 +9,7 @@ if (!uri) {
   );
 }
 
-// Reuse one MongoClient during Next.js development hot reloads.
+
 const globalForMongo = globalThis as typeof globalThis & {
   mongoClient?: MongoClient;
 };
@@ -24,5 +24,5 @@ if (process.env.NODE_ENV !== "production") {
   globalForMongo.mongoClient = mongoClient;
 }
 
-// The database name is read from the database name in your Atlas URI.
+
 export const mongoDb = mongoClient.db();
