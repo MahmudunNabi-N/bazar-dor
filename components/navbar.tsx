@@ -1,17 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { categories } from "@/data/categories";
 import { formatBanglaDate } from "@/lib/format";
 import type { Product } from "@/lib/types";
 import { PriceTicker } from "@/components/price-ticker";
+import { authClient } from "@/lib/auth-client";
 
 export function Navbar({ products }: { products: Product[] }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session, isPending } = authClient.useSession();
   const isHome = pathname === "/";
+
+  async function handleSignOut() {
+    const { error } = await authClient.signOut();
+
+    if (error) {
+      toast.error(error.message || "সাইন আউট করা যায়নি।");
+      return;
+    }
+
+    toast.success("সফলভাবে সাইন আউট করেছেন।");
+    setMenuOpen(false);
+    router.replace("/");
+    router.refresh();
+  }
 
   return (
     <>
@@ -36,8 +54,25 @@ export function Navbar({ products }: { products: Product[] }) {
           </button>
 
           <div className="header-actions">
-            <Link href="/signin" className="button button-outline button-small">সাইন ইন</Link>
-            <Link href="/signup" className="button button-primary button-small">সাইন আপ <span aria-hidden="true">↗</span></Link>
+            {session?.user ? (
+              <>
+                <Link href="/profile" className="button button-outline button-small">
+                  {session.user.name || "আমার প্রোফাইল"}
+                </Link>
+                <button
+                  type="button"
+                  className="button button-primary button-small"
+                  onClick={handleSignOut}
+                >
+                  সাইন আউট
+                </button>
+              </>
+            ) : !isPending ? (
+              <>
+                <Link href="/signin" className="button button-outline button-small">সাইন ইন</Link>
+                <Link href="/signup" className="button button-primary button-small">সাইন আপ <span aria-hidden="true">↗</span></Link>
+              </>
+            ) : null}
           </div>
         </div>
 
@@ -60,7 +95,11 @@ export function Navbar({ products }: { products: Product[] }) {
                 <span>{category.emoji}</span>{category.name}
               </Link>
             ))}
-            <Link href="/profile" className={`category-nav-link profile-nav-link ${pathname.startsWith("/profile") ? "active" : ""}`} onClick={() => setMenuOpen(false)}>
+            <Link
+              href="/profile"
+              className={`category-nav-link profile-nav-link ${pathname.startsWith("/profile") ? "active" : ""}`}
+              onClick={() => setMenuOpen(false)}
+            >
               <span>👤</span> প্রোফাইল
             </Link>
           </nav>
