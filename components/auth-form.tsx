@@ -16,6 +16,27 @@ export const AuthForm = ({ mode }: { mode: "signin" | "signup" }) => {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const handleSocialSignIn = async (provider: "google" | "github") => {
+  try {
+    setIsSubmitting(true);
+
+    const { error } = await authClient.signIn.social({
+      provider,
+      callbackURL: "/profile",
+    });
+
+    if (error) {
+      toast.error(error.message ?? "কোনো সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    }
+  } catch (error) {
+    toast.error(
+      error instanceof Error ? error.message : "কোনো সমস্যা হয়েছে। আবার চেষ্টা করুন।"
+    );
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -216,8 +237,26 @@ export const AuthForm = ({ mode }: { mode: "signin" | "signup" }) => {
             <span>অথবা</span>
           </div>
 
-          <div className="auth-socials">
-            {/* git hub and google button  */}
+          <div className="auth-socials flex flex-col gap-3">
+            <button
+              type="button"
+              onClick={() => handleSocialSignIn("google")}
+              disabled={isSubmitting}
+              className="btn w-full border border-gray-300 bg-white text-gray-800 hover:bg-gray-100"
+            >
+              <i className="fa-brands fa-google"></i>
+              Continue with Google
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSocialSignIn("github")}
+              disabled={isSubmitting}
+              className="btn w-full border border-gray-300 bg-white text-gray-800 hover:bg-gray-100"
+            >
+              <i className="fa-brands fa-github"></i>
+              Continue with GitHub
+            </button>
           </div>
 
           <p className="auth-switch">
