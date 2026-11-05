@@ -24,14 +24,13 @@ export function Hero({ products }: { products: Product[] }) {
       </div>
 
       <div className="hero-visual">
-        <div className="hero-visual-orbit orbit-one" />
-        <div className="hero-visual-orbit orbit-two" />
+        
         <div className="hero-image-frame">
           <span className="hero-image-sparkle sparkle-one">✳</span>
           <span className="hero-image-sparkle sparkle-two">✦</span>
           <img
-            src="https://raw.githubusercontent.com/ProgrammingHero1/B14-A7-Bazar-Dor/main/bazar-hero.png"
-            alt="তাজা সবজির বাজারের ঝুড়ি"
+            src="/public/bazar-hero.png"
+            alt="তাজা সবজির বাজারের ঝুড়ি"
             width={301}
             height={222}
             className="hero-basket-image"
