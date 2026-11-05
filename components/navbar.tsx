@@ -1,49 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { categories } from "@/data/categories";
 import { formatBanglaDate } from "@/lib/format";
 import type { Product } from "@/lib/types";
 import { PriceTicker } from "@/components/price-ticker";
-import { authClient } from "@/lib/auth-client";
-import Image from "next/image";
 
 export function Navbar({ products }: { products: Product[] }) {
   const pathname = usePathname();
-  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { data: session, isPending } = authClient.useSession();
   const isHome = pathname === "/";
-
-  async function handleSignOut() {
-    const { error } = await authClient.signOut();
-
-    if (error) {
-      toast.error(error.message || "সাইন আউট করা যায়নি।");
-      return;
-    }
-
-    toast.success("সফলভাবে সাইন আউট করেছেন।");
-    setMenuOpen(false);
-    router.replace("/");
-    router.refresh();
-  }
 
   return (
     <>
       <header className="site-header">
         <div className="header-main shell">
           <Link href="/" className="brand" aria-label="বাজার দর হোম পেজ">
-            <span className="brand-mark"> 
-            <Image
-              src="/logo-icon.png"
-              alt="বাজার দর"
-              width={40}
-              height={40}
-            /></span>
+            <span className="brand-mark">🛒</span>
             <span className="brand-copy">
               <strong>বাজার দর</strong>
               <small>{formatBanglaDate()}</small>
@@ -61,25 +36,8 @@ export function Navbar({ products }: { products: Product[] }) {
           </button>
 
           <div className="header-actions">
-            {session?.user ? (
-              <>
-                <Link href="/profile" className="button button-outline button-small">
-                  {session.user.name || "আমার প্রোফাইল"}
-                </Link>
-                <button
-                  type="button"
-                  className="button button-primary button-small"
-                  onClick={handleSignOut}
-                >
-                  সাইন আউট
-                </button>
-              </>
-            ) : !isPending ? (
-              <>
-                <Link href="/signin" className="button button-outline button-small">সাইন ইন</Link>
-                <Link href="/signup" className="button button-primary button-small">সাইন আপ <span aria-hidden="true">↗</span></Link>
-              </>
-            ) : null}
+            <Link href="/signin" className="button button-outline button-small">সাইন ইন</Link>
+            <Link href="/signup" className="button button-primary button-small">সাইন আপ <span aria-hidden="true">↗</span></Link>
           </div>
         </div>
 
@@ -102,11 +60,7 @@ export function Navbar({ products }: { products: Product[] }) {
                 <span>{category.emoji}</span>{category.name}
               </Link>
             ))}
-            <Link
-              href="/profile"
-              className={`category-nav-link profile-nav-link ${pathname.startsWith("/profile") ? "active" : ""}`}
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link href="/profile" className={`category-nav-link profile-nav-link ${pathname.startsWith("/profile") ? "active" : ""}`} onClick={() => setMenuOpen(false)}>
               <span>👤</span> প্রোফাইল
             </Link>
           </nav>

@@ -1,7 +1,9 @@
-import Image from "next/image";
+import type { Product } from "@/lib/types";
+import { formatNumber } from "@/lib/format";
 
-
-const Hero = () => {
+export function Hero({ products }: { products: Product[] }) {
+  const rice = products.find((product) => product.category === "chal") ?? products[0];
+  const fish = products.find((product) => product.name.includes("ইলিশ")) ?? products.find((product) => product.category === "mach");
 
   return (
     <section className="hero-section shell">
@@ -22,22 +24,17 @@ const Hero = () => {
       </div>
 
       <div className="hero-visual">
-
         <div className="hero-image-frame">
-          <Image
-            src="/bazar-hero.png"
-            alt="তাজা সবজির বাজারের ঝুড়ি"
+          <img
+            src="https://raw.githubusercontent.com/ProgrammingHero1/B14-A7-Bazar-Dor/main/bazar-hero.png"
+            alt="তাজা সবজির বাজারের ঝুড়ি"
             width={301}
             height={222}
             className="hero-basket-image"
-            priority
           />
-
           <div className="hero-visual-caption"><span>🌿</span> প্রতিদিনের তাজা বাজারদর</div>
         </div>
       </div>
     </section>
   );
 }
-
-export default Hero;
