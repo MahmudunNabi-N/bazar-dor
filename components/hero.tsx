@@ -1,6 +1,7 @@
+import Image from "next/image";
 
 
-export function Hero() {
+const Hero = () => {
 
   return (
     <section className="hero-section shell">
@@ -21,19 +22,22 @@ export function Hero() {
       </div>
 
       <div className="hero-visual">
-        
+
         <div className="hero-image-frame">
-          <img
+          <Image
             src="/bazar-hero.png"
             alt="তাজা সবজির বাজারের ঝুড়ি"
             width={301}
             height={222}
             className="hero-basket-image"
+            priority
           />
-          
+
           <div className="hero-visual-caption"><span>🌿</span> প্রতিদিনের তাজা বাজারদর</div>
         </div>
       </div>
     </section>
   );
 }
+
+export default Hero;

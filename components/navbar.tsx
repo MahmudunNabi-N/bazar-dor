@@ -9,6 +9,7 @@ import { formatBanglaDate } from "@/lib/format";
 import type { Product } from "@/lib/types";
 import { PriceTicker } from "@/components/price-ticker";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 export function Navbar({ products }: { products: Product[] }) {
   const pathname = usePathname();
@@ -36,7 +37,13 @@ export function Navbar({ products }: { products: Product[] }) {
       <header className="site-header">
         <div className="header-main shell">
           <Link href="/" className="brand" aria-label="বাজার দর হোম পেজ">
-            <span className="brand-mark"><img src="/logo-icon.png" alt="বাজার দর" /></span>
+            <span className="brand-mark"> 
+            <Image
+              src="/logo-icon.png"
+              alt="বাজার দর"
+              width={40}
+              height={40}
+            /></span>
             <span className="brand-copy">
               <strong>বাজার দর</strong>
               <small>{formatBanglaDate()}</small>
