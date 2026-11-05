@@ -36,7 +36,7 @@ export function Navbar({ products }: { products: Product[] }) {
       <header className="site-header">
         <div className="header-main shell">
           <Link href="/" className="brand" aria-label="বাজার দর হোম পেজ">
-            <span className="brand-mark"><img src="/public/logo-icon.png" alt="বাজার দর" /></span>
+            <span className="brand-mark"><img src="/logo-icon.png" alt="বাজার দর" /></span>
             <span className="brand-copy">
               <strong>বাজার দর</strong>
               <small>{formatBanglaDate()}</small>

@@ -1,9 +1,6 @@
-import type { Product } from "@/lib/types";
-import { formatNumber } from "@/lib/format";
 
-export function Hero({ products }: { products: Product[] }) {
-  const rice = products.find((product) => product.category === "chal") ?? products[0];
-  const fish = products.find((product) => product.name.includes("ইলিশ")) ?? products.find((product) => product.category === "mach");
+
+export function Hero() {
 
   return (
     <section className="hero-section shell">
@@ -26,10 +23,8 @@ export function Hero({ products }: { products: Product[] }) {
       <div className="hero-visual">
         
         <div className="hero-image-frame">
-          <span className="hero-image-sparkle sparkle-one">✳</span>
-          <span className="hero-image-sparkle sparkle-two">✦</span>
           <img
-            src="/public/bazar-hero.png"
+            src="/bazar-hero.png"
             alt="তাজা সবজির বাজারের ঝুড়ি"
             width={301}
             height={222}
