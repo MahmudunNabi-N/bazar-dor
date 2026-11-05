@@ -35,12 +35,7 @@ export function Hero({ products }: { products: Product[] }) {
             height={222}
             className="hero-basket-image"
           />
-          <div className="hero-floating-card floating-rice">
-            <span>🍚</span><div><small>{rice?.name ?? "চাল"}</small><strong>{formatNumber(rice?.price ?? 0)} ৳ / কেজি</strong></div>
-          </div>
-          {fish && <div className="hero-floating-card floating-fish">
-            <span>🐟</span><div><small>{fish.name}</small><strong>{formatNumber(fish.price)} ৳ / কেজি</strong></div>
-          </div>}
+          
           <div className="hero-visual-caption"><span>🌿</span> প্রতিদিনের তাজা বাজারদর</div>
         </div>
       </div>
